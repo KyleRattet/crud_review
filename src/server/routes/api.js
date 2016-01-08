@@ -57,6 +57,17 @@ router.put('/pet/:id', function(req, res, next){
   });
 });
 
+//ROUTE 5 DELETE
+router.delete('/pet/:id', function(req, res, next){
+  Pets.findByIdAndRemove(req.params.id, function(err, data){
+    if(err) {
+      res.json({'message': err});
+    } else {
+      res.json({'REMOVED': data});
+    }
+  });
+});
+
 
 
 

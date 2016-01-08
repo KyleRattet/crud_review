@@ -99,16 +99,34 @@ describe('Pets', function (){
       .end(function(err, res){
         chai.request(server)
           .put('/api/pet/' + res.body[0]._id)
-          .send({'name': 'Mickey', 'age': 40})
+          .send({'name': 'Mickey', 'type': 'Mouse', 'age': 40})
           .end(function(err, res){
-            console.log(res.body);
             res.should.have.status(200);
             res.should.be.json;
+            res.body.UPDATED.should.have.property('name');
+            res.body.UPDATED.type.should.equal('Mouse');
+            res.body.UPDATED.age.should.equal(40);
             done();
           });
       });
   });
 
-
+  //Delete Route
+  it('should delete a SINGLE pet on /pet/<id> DELETE', function(done){
+    chai.request(server)
+      .get('/api/pets')
+      .end(function(err, res){
+        chai.request(server)
+          .delete('/api/pet/'+res.body[0]._id)
+          .end(function(err, res){
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body.should.be.a('object');
+            res.body.REMOVED.name.should.equal('Ruffus');
+            res.body.REMOVED.type.should.equal('Dog');
+            done();
+          });
+      });
+  });
 
 });
