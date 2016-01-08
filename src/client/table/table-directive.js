@@ -2,14 +2,13 @@ app.directive('petTable', function(){
   return {
     restrict: 'E',
     templateUrl: '/table/table.html',
-    controller: ['$scope', '$http', 'httpFactory',function ($scope, $http, httpFactory) {
+    controller: ['$scope', '$http', 'httpFactory', function ($scope, $http, httpFactory) {
 
       //get all pets
       getPets = function (url) {
         httpFactory.get(url)
         .then(function(response){
           $scope.pets = response.data;
-          console.log(response.data)
         });
       };
 
@@ -24,13 +23,17 @@ app.directive('petTable', function(){
       };
 
       //edit pet
-      $scope.editPet = function (id, payload) {
-        httpFactory.put('api/pet/' + id)
+      $scope.editPet = function (name, type, age, id) {
+        var payload = {
+          'name': name,
+          'type': type,
+          'age': age
+        };
+        httpFactory.put('api/pet/' + id, payload)
         .then(function(response){
-
         getPets('api/pets');
         });
-      }
+      };
 
     }]
   };
