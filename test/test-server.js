@@ -37,7 +37,6 @@ describe('Pets', function (){
       chai.request(server)
         .get('/api/pets')
         .end(function(err, res){
-          console.log(res.body)
           res.should.have.status(200);
           res.body.should.be.a('array');
           res.body[0].should.have.property('name');
@@ -47,8 +46,30 @@ describe('Pets', function (){
           done();
         });
     });
+  });
 
 
+  //get one pet
+  it('should list ONE pet on /api/pet', function(done){
+    var newPetThree = new Pets ({
+      name: 'Nemo',
+      type: 'Fish',
+      age: 12
+    });
+    newPetThree.save(function(err, data){
+      chai.request(server)
+        .get('/api/pet/' + data.id)
+        .end(function(err, res){
+          console.log(res.body);
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('name');
+          res.body.should.have.property('type');
+          res.body.age.should.equal(12);
+          done();
+        });
+    });
   });
 
 

@@ -5,4 +5,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+// router.get('/', function(req, res) {
+//   res.sendFile(path.join(__dirname, '../../client', 'index.html'));
+// });
+
 module.exports = router;
