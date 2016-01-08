@@ -60,7 +60,6 @@ describe('Pets', function (){
       chai.request(server)
         .get('/api/pet/' + data.id)
         .end(function(err, res){
-          console.log(res.body);
           res.should.have.status(200);
           res.should.be.json;
           res.body.should.be.a('object');
@@ -70,6 +69,27 @@ describe('Pets', function (){
           done();
         });
     });
+  });
+
+  //post test
+  it('should add a SINGLE pet on /pet post', function(done){
+     var newPetFour = new Pets ({
+        name: 'Simba',
+        type: 'Lion',
+        age: 3
+      });
+     chai.request(server)
+      .post('/api/pet')
+      .send(newPetFour)
+      .end(function(err, res){
+        console.log(res.body);
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.SUCCESS.should.have.property('name');
+        res.body.SUCCESS.type.should.equal('Lion');
+        done();
+      });
   });
 
 

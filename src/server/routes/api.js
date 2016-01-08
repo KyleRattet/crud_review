@@ -24,7 +24,21 @@ router.get('/pet/:id', function(req, res, next){
   });
 });
 
-
+//ROUTE 3 POST
+router.post('/pet', function(req, res, next){
+  newPet = new Pets ({
+    name: req.body.name,
+    type: req.body.type,
+    age: req.body.age
+  });
+  newPet.save(function(err, data){
+    if(err) {
+      res.json({'message': err});
+    } else {
+      res.json({'SUCCESS': data});
+    }
+  });
+});
 
 
 module.exports = router;
