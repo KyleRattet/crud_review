@@ -40,5 +40,24 @@ router.post('/pet', function(req, res, next){
   });
 });
 
+//ROUTE 4 PUT
+router.put('/pet/:id', function(req, res, next){
+  var update = {
+    name: req.body.name,
+    type: req.body.type,
+    age: req.body.age
+  };
+  var options = {new: true};
+  Pets.findByIdAndUpdate(req.params.id, update, options, function(err, data){
+    if(err) {
+      res.json({'message': err});
+    } else {
+      res.json({'UPDATED' : data});
+    }
+  });
+});
+
+
+
 
 module.exports = router;

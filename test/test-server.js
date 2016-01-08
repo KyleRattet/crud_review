@@ -82,13 +82,30 @@ describe('Pets', function (){
       .post('/api/pet')
       .send(newPetFour)
       .end(function(err, res){
-        console.log(res.body);
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('object');
         res.body.SUCCESS.should.have.property('name');
         res.body.SUCCESS.type.should.equal('Lion');
         done();
+      });
+  });
+
+
+  //Put Route
+  it('should update a SINGLE pet on /pet/<id> PUT', function(done){
+    chai.request(server)
+      .get('/api/pets')
+      .end(function(err, res){
+        chai.request(server)
+          .put('/api/pet/' + res.body[0]._id)
+          .send({'name': 'Mickey', 'age': 40})
+          .end(function(err, res){
+            console.log(res.body);
+            res.should.have.status(200);
+            res.should.be.json;
+            done();
+          });
       });
   });
 
