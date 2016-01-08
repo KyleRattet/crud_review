@@ -13,7 +13,16 @@ router.get('/pets', function(req, res, next){
   });
 });
 
-
+//ROUTE 2 GET ONE PET
+router.get('/pet/:id', function(req, res, next){
+  Pets.findById(req.params.id, function (err, data){
+    if(err) {
+      res.json({'message': err});
+    } else {
+      res.json(data);
+    }
+  });
+});
 
 
 
