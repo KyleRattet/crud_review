@@ -15,6 +15,23 @@ app.directive('petTable', function(){
 
       getPets('api/pets');
 
+      //delete pet
+      $scope.deletePet = function (id) {
+        httpFactory.delete('api/pet/' + id)
+        .then(function(response){
+        getPets('api/pets');
+        });
+      };
+
+      //edit pet
+      $scope.editPet = function (id, payload) {
+        httpFactory.put('api/pet/' + id)
+        .then(function(response){
+
+        getPets('api/pets');
+        });
+      }
+
     }]
   };
 });
